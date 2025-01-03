@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.event.player.UseBlockCallback
 import net.minecraft.block.Blocks
 import net.minecraft.text.Text
 import net.minecraft.util.ActionResult
+import net.minecraft.util.Formatting
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
@@ -18,6 +19,7 @@ class NoBedrock : ModInitializer {
                 world.getBlockState(blockPos)?.let {
                     if(plr.getStackInHand(hand).item.equals(Blocks.BEDROCK.asItem())) {
                         logger.info("Prevented ${plr.name} from placing bedrock 😎")
+                        plr.sendMessage(Text.literal("Right-click interactions are disabled when bedrock is equipped.").formatted(Formatting.RED, Formatting.BOLD), true)
                         return@register ActionResult.FAIL
                     }
                 }
