@@ -11,13 +11,13 @@ import org.slf4j.LoggerFactory
 class NoBedrock : ModInitializer {
     private val logger: Logger = LoggerFactory.getLogger("nobedrock")
     override fun onInitialize() {
-        logger.info("NO BEDROCK!")
+        logger.info("No Bedrock mod initialized")
         UseBlockCallback.EVENT.register { plr, world, hand, result ->
-            plr.sendMessage(Text.of("Event."))
             if(!world.isClient) {
                 val blockPos = result.blockPos.offset(result.side)
                 world.getBlockState(blockPos)?.let {
                     if(plr.getStackInHand(hand).item.equals(Blocks.BEDROCK.asItem())) {
+                        logger.info("Prevented ${plr.name} from placing bedrock 😎")
                         return@register ActionResult.FAIL
                     }
                 }
